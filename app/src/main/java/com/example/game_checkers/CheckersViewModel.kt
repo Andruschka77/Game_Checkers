@@ -33,20 +33,15 @@ class CheckersViewModel : ViewModel() {
             val currentState = _gameState.value
 
             if (currentState.selectedPiece == null) {
-                // Выбираем шашку (используем from из Move)
                 _gameState.value = currentState.copy(selectedPiece = move.from)
             } else {
-                // Проверяем, допустим ли ход
                 if (move in currentState.possibleMoves) {
-                    // Выполняем ход через CheckersGameState
                     val success = currentState.makeMove(move)
 
                     if (success) {
-                        // Если ход успешен, обновляем состояние
-                        _gameState.value = currentState // Обновляем текущее состояние
+                        _gameState.value = currentState
                     }
                 } else {
-                    // Если ход недопустим, выбираем другую шашку
                     _gameState.value = currentState.copy(selectedPiece = move.from)
                 }
             }
@@ -56,7 +51,7 @@ class CheckersViewModel : ViewModel() {
     fun selectPiece(position: Position) {
         val currentState = _gameState.value
         currentState.selectPiece(position)
-        _gameState.value = currentState.copy() // Обновляем состояние
+        _gameState.value = currentState.copy()
     }
 
     fun resetGame() {

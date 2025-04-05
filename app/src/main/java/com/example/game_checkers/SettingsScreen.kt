@@ -49,59 +49,54 @@ fun SettingsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Выбор темы
         Text(
             text = "Выбор темы приложения:",
             style = MaterialTheme.typography.titleLarge
         )
 
-        // Кнопки выбора темы
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center // Используем Arrangement.Center
+            horizontalArrangement = Arrangement.Center
         ) {
-            // Кнопка светлой темы
             Button(
                 onClick = { onThemeChanged(false) },
                 modifier = Modifier
-                    .height(48.dp) // Высота кнопки
+                    .height(48.dp)
                     .border(
                         width = if (!isDarkTheme) 2.dp else 0.dp,
                         color = borderColor,
-                        shape = RoundedCornerShape(50) // Овальная форма
+                        shape = RoundedCornerShape(50)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary, // Цвет как у системы
-                    contentColor = MaterialTheme.colorScheme.onPrimary // Цвет текста как у системы
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                shape = RoundedCornerShape(50) // Овальная форма
+                shape = RoundedCornerShape(50)
             ) {
                 Text("Светлая тема")
             }
 
             Spacer(modifier = Modifier.width(32.dp))
 
-            // Кнопка тёмной темы
             Button(
                 onClick = { onThemeChanged(true) },
                 modifier = Modifier
-                    .height(48.dp) // Высота кнопки
+                    .height(48.dp)
                     .border(
                         width = if (isDarkTheme) 2.dp else 0.dp,
                         color = borderColor,
-                        shape = RoundedCornerShape(50) // Овальная форма
+                        shape = RoundedCornerShape(50)
                     ),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary, // Цвет как у системы
-                    contentColor = MaterialTheme.colorScheme.onPrimary // Цвет текста как у системы
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                shape = RoundedCornerShape(50) // Овальная форма
+                shape = RoundedCornerShape(50)
             ) {
                 Text("Тёмная тема")
             }
         }
 
-        // Выбор стиля шашек
         Text(
             text = "Выбор стиля шашек:",
             style = MaterialTheme.typography.titleLarge

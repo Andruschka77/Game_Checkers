@@ -78,10 +78,7 @@ fun CheckersScreen(
                 checkerStyle = checkerStyle,
                 cellSize = cellSize,
                 onPieceSelected = { position ->
-                    // Просто передаем позицию в ViewModel, вся логика там
                     viewModel.selectPiece(position)
-
-                    // Если шашка уже выбрана и это возможный ход - делаем ход
                     gameState.selectedPiece?.let { selected ->
                         gameState.possibleMoves.firstOrNull { it.to == position }?.let { move ->
                             viewModel.makeMove(move)
@@ -211,8 +208,8 @@ private fun BoardCell(
     onClick: () -> Unit,
     cellSize: Dp
 ) {
-    val cellColor = if (isBlackCell) Color(0xFF769656) else Color(0xFFEEEED2) // Классические шахматные цвета
-    val highlightColor = Color(0x4076B6FF) // Голубой для выделения
+    val cellColor = if (isBlackCell) Color(0xFF769656) else Color(0xFFEEEED2)
+    val highlightColor = Color(0x4076B6FF)
 
     Box(
         modifier = Modifier

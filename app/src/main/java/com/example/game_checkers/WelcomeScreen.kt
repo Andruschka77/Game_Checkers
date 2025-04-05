@@ -50,7 +50,6 @@ fun WelcomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Кнопка "Начать новую игру"
         Button(
             onClick = onStartGame,
             modifier = Modifier.fillMaxWidth(0.8f)
@@ -60,7 +59,6 @@ fun WelcomeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Кнопка "Настройки"
         Button(
             onClick = onSettingsClicked,
             modifier = Modifier.fillMaxWidth(0.8f)

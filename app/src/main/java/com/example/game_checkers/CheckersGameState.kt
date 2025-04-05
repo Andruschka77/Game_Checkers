@@ -4,8 +4,8 @@ enum class PieceType { REGULAR, KING }
 enum class Player { WHITE, BLACK }
 
 data class Piece(
-    val player: Player, // Игрок, которому принадлежит шашка
-    val type: PieceType = PieceType.REGULAR // Тип шашки: обычная или дамка
+    val player: Player,
+    val type: PieceType = PieceType.REGULAR
 )
 data class Position(val row: Int, val col: Int)
 data class Move(val from: Position, val to: Position, val captured: Position? = null)
@@ -79,7 +79,6 @@ class CheckersGameState {
         val piece = getPieceAt(move.from)!!
         board[move.from.row][move.from.col] = null
 
-        // Превращение в дамку
         val newType = when {
             piece.type == PieceType.KING -> PieceType.KING
             move.to.row == 0 && piece.player == Player.WHITE -> PieceType.KING
@@ -90,11 +89,9 @@ class CheckersGameState {
         board[move.to.row][move.to.col] = Piece(piece.player, newType)
         lastMove = move
 
-        // Удаление съеденной шашки
         move.captured?.let { captured ->
             board[captured.row][captured.col] = null
 
-            // Проверка на возможность дальнейшего взятия
             val nextCaptures = calculatePossibleMoves(move.to).filter { it.captured != null }
             if (nextCaptures.isNotEmpty()) {
                 selectedPiece = move.to
@@ -113,8 +110,8 @@ class CheckersGameState {
         val blackPieces = board.flatten().count { it?.player == Player.BLACK }
 
         winner = when {
-            whitePieces == 0 -> Player.BLACK // Победили чёрные
-            blackPieces == 0 -> Player.WHITE // Победили белые
+            whitePieces == 0 -> Player.BLACK
+            blackPieces == 0 -> Player.WHITE
             currentPlayerHasNoMoves() -> if (currentPlayer == Player.WHITE) Player.BLACK else Player.WHITE
             else -> null
         }
@@ -214,8 +211,8 @@ class CheckersGameState {
     }
 
     fun getCapturedPiecesCount(player: Player): Int {
-        val totalPieces = if (player == Player.WHITE) 12 else 12 // Количество шашек игрока в начале игры
-        val remainingPieces = board.flatten().count { it?.player == player } // Количество оставшихся шашек игрока
-        return totalPieces - remainingPieces // Количество съеденных шашек
+        val totalPieces = if (player == Player.WHITE) 12 else 12
+        val remainingPieces = board.flatten().count { it?.player == player }
+        return totalPieces - remainingPieces
     }
 }

@@ -51,5 +51,4 @@ fun Game_CheckersTheme(
     )
 }
 
-// Для доступа к стилю в любом месте приложения
 val LocalCheckerStyle = staticCompositionLocalOf { CheckerStyle.CLASSIC }
