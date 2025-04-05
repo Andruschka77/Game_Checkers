@@ -7,6 +7,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
@@ -15,6 +16,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Color(0xFF121212),
     surface = Color(0xFF1C1C1C),
     onPrimary = Color.White,
+    onSecondary = Color.Black,
     onBackground = Color.White,
     onSurface = Color.White
 )
@@ -25,6 +27,7 @@ private val LightColorScheme = lightColorScheme(
     background = Color.White,
     surface = Color.White,
     onPrimary = Color.White,
+    onSecondary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black
 )
@@ -38,6 +41,7 @@ fun Game_CheckersTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = Typography(),
         content = content
     )
 }

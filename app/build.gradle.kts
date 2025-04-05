@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.org.jsoup.nodes.Entities.EscapeMode.extended
 
 plugins {
     alias(libs.plugins.android.application)
@@ -42,6 +41,13 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.gson)
+    implementation(libs.androidx.lifecycle.viewmodel.compose.v262)
+    implementation(libs.androidx.material3.v110)
+    implementation(libs.androidx.ui.v150)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.runtime)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.ui)

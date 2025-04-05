@@ -10,6 +10,24 @@ class CheckersViewModel : ViewModel() {
     private val _gameState = MutableStateFlow(CheckersGameState())
     val gameState: StateFlow<CheckersGameState> = _gameState
 
+    private var savedState: CheckersGameState? = null
+
+    fun clearSavedGame() {
+        savedState = null
+    }
+
+    fun saveCurrentGame() {
+        savedState = _gameState.value.copy()
+    }
+
+    fun loadSavedGame() {
+        savedState?.let {
+            _gameState.value = it
+        }
+    }
+
+    fun hasSavedGame(): Boolean = savedState != null
+
     fun makeMove(position: Position) {
         viewModelScope.launch {
             val currentState = _gameState.value

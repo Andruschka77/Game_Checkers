@@ -1,72 +1,40 @@
 package com.example.game_checkers
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import kotlinx.coroutines.delay
-
-@Composable
-fun WelcomeScreen(
-    onStartGame: () -> Unit,       // Обработчик начала игры
-    onThemeChanged: (Boolean) -> Unit, // Обработчик изменения темы
-    modifier: Modifier = Modifier  // Модификатор для размещения
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Добро пожаловать в шашки!",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Кнопки выбора темы
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Button(onClick = { onThemeChanged(false) }) {
-                Text("Светлая тема")
-            }
-
-            Button(onClick = { onThemeChanged(true) }) {
-                Text("Тёмная тема")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Кнопка "Начать новую игру"
-        Button(onClick = onStartGame) {
-            Text("Начать новую игру")
-        }
-    }
-}
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun CheckersScreen(
@@ -76,8 +44,9 @@ fun CheckersScreen(
 ) {
     val gameState by viewModel.gameState.collectAsState()
 
-    if (gameState.winner != null) {
-        LaunchedEffect(gameState.winner) {
+    LaunchedEffect(gameState.winner) {
+        if (gameState.winner != null) {
+            viewModel.clearSavedGame()
             onGameFinished(gameState.winner!!)
         }
     }
@@ -133,43 +102,9 @@ fun CheckersScreen(
             Text("Назад")
         }
     }
-}
 
-@Composable
-fun WinnerScreen(
-    winner: Player,
-    onExit: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    var showScreen by remember { mutableStateOf(true) }
-
-    LaunchedEffect(showScreen) {
-        delay(3000)
-        showScreen = false
-        onExit()
-    }
-
-    if (showScreen) {
-        Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Победили ${if (winner == Player.WHITE) "Белые!" else "Чёрные!"}",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
+    BackHandler {
+        onBackPressed()
     }
 }
 
