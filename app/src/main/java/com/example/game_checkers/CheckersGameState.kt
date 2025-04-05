@@ -92,7 +92,9 @@ class CheckersGameState {
         move.captured?.let { captured ->
             board[captured.row][captured.col] = null
 
-            val nextCaptures = calculatePossibleMoves(move.to).filter { it.captured != null }
+            val nextCaptures = calculatePossibleMoves(move.to)
+                .filter { it.captured != null && it.from == move.to }
+
             if (nextCaptures.isNotEmpty()) {
                 selectedPiece = move.to
                 possibleMoves = nextCaptures
@@ -149,30 +151,37 @@ class CheckersGameState {
         return true
     }
 
-    internal fun calculatePossibleMoves(position: Position): List<Move> {
+    private fun calculatePossibleMoves(position: Position): List<Move> {
         val piece = getPieceAt(position) ?: return emptyList()
         val moves = mutableListOf<Move>()
 
-        val directions = when {
-            piece.type == PieceType.KING -> listOf(-1 to -1, -1 to 1, 1 to -1, 1 to 1)
-            piece.player == Player.WHITE -> listOf(-1 to -1, -1 to 1)
-            else -> listOf(1 to -1, 1 to 1)
+        val directions = listOf(-1 to -1, -1 to 1, 1 to -1, 1 to 1)
+        val allowedDirections = when (piece.type) {
+            PieceType.REGULAR -> {
+                if (piece.player == Player.WHITE) listOf(-1 to -1, -1 to 1) else listOf(1 to -1, 1 to 1)
+            }
+            PieceType.KING -> directions
         }
 
         for ((dr, dc) in directions) {
             val newRow = position.row + dr
             val newCol = position.col + dc
+            val jumpRow = position.row + 2 * dr
+            val jumpCol = position.col + 2 * dc
 
-            if (newRow in 0..7 && newCol in 0..7 && getPieceAt(Position(newRow, newCol)) == null) {
-                moves.add(Move(position, Position(newRow, newCol)))
-            } else if (newRow in 0..7 && newCol in 0..7) {
-                val capturedPiece = getPieceAt(Position(newRow, newCol))
-                if (capturedPiece != null && capturedPiece.player != piece.player) {
-                    val jumpRow = newRow + dr
-                    val jumpCol = newCol + dc
-                    if (jumpRow in 0..7 && jumpCol in 0..7 && getPieceAt(Position(jumpRow, jumpCol)) == null) {
-                        moves.add(Move(position, Position(jumpRow, jumpCol), Position(newRow, newCol)))
-                    }
+            if (newRow !in 0..7 || newCol !in 0..7) continue
+
+            val newPos = Position(newRow, newCol)
+            val newPiece = getPieceAt(newPos)
+
+            if (newPiece == null) {
+                if ((dr to dc) in allowedDirections) {
+                    moves.add(Move(position, newPos))
+                }
+            } else if (newPiece.player != piece.player && jumpRow in 0..7 && jumpCol in 0..7) {
+                val jumpPos = Position(jumpRow, jumpCol)
+                if (getPieceAt(jumpPos) == null) {
+                    moves.add(Move(position, jumpPos, newPos))
                 }
             }
         }
