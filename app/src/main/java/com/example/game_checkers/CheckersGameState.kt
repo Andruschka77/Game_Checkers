@@ -152,7 +152,7 @@ class CheckersGameState {
         return true
     }
 
-    private fun calculatePossibleMoves(position: Position): List<Move> {
+    internal fun calculatePossibleMoves(position: Position): List<Move> {
         val piece = getPieceAt(position) ?: return emptyList()
         val moves = mutableListOf<Move>()
 

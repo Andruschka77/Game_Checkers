@@ -17,9 +17,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             var isDarkTheme by remember { mutableStateOf(false) }
             var currentScreen by remember { mutableStateOf<Screen>(Screen.Welcome) }
+            var currentCheckerStyle by remember { mutableStateOf(CheckerStyle.CLASSIC) }
             val viewModel: CheckersViewModel = viewModel()
 
-            Game_CheckersTheme(darkTheme = isDarkTheme) {
+            Game_CheckersTheme(
+                darkTheme = isDarkTheme,
+                checkerStyle = currentCheckerStyle
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -41,25 +45,31 @@ class MainActivity : ComponentActivity() {
                         is Screen.Game -> CheckersScreen(
                             viewModel = viewModel,
                             onBackPressed = {
-                                viewModel.saveCurrentGame() // Сохраняем при выходе
+                                viewModel.saveCurrentGame()
                                 currentScreen = Screen.Welcome
                             },
                             onGameFinished = { winner ->
-                                viewModel.resetGame() // Сбрасываем сохранённую игру при завершении
+                                viewModel.clearSavedGame()
                                 currentScreen = Screen.Winner(winner)
-                            }
+                            },
+                            checkerStyle = currentCheckerStyle
                         )
 
                         is Screen.Settings -> SettingsScreen(
                             isDarkTheme = isDarkTheme,
+                            currentCheckerStyle = currentCheckerStyle,
                             onThemeChanged = { isDarkTheme = it },
+                            onCheckerStyleChanged = { style ->
+                                currentCheckerStyle = style
+                            },
                             onBackPressed = { currentScreen = Screen.Welcome }
                         )
 
                         is Screen.Winner -> WinnerScreen(
                             winner = (currentScreen as Screen.Winner).winner,
+                            checkerStyle = currentCheckerStyle,
                             onExit = {
-                                viewModel.clearSavedGame() // Очищаем сохранённую игру
+                                viewModel.resetGame()
                                 currentScreen = Screen.Welcome
                             }
                         )

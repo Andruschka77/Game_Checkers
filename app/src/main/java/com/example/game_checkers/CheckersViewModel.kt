@@ -28,22 +28,26 @@ class CheckersViewModel : ViewModel() {
 
     fun hasSavedGame(): Boolean = savedState != null
 
-    fun makeMove(position: Position) {
+    fun makeMove(move: Move) {
         viewModelScope.launch {
             val currentState = _gameState.value
+
             if (currentState.selectedPiece == null) {
-                // Выбираем шашку
-                _gameState.value = currentState.copy(selectedPiece = position)
+                // Выбираем шашку (используем from из Move)
+                _gameState.value = currentState.copy(selectedPiece = move.from)
             } else {
-                // Ищем допустимый ход
-                val move = currentState.possibleMoves.firstOrNull { it.to == position }
-                if (move != null) {
-                    // Выполняем ход
-                    currentState.makeMove(move)
-                    _gameState.value = currentState.copy() // Обновляем состояние
+                // Проверяем, допустим ли ход
+                if (move in currentState.possibleMoves) {
+                    // Выполняем ход через CheckersGameState
+                    val success = currentState.makeMove(move)
+
+                    if (success) {
+                        // Если ход успешен, обновляем состояние
+                        _gameState.value = currentState // Обновляем текущее состояние
+                    }
                 } else {
                     // Если ход недопустим, выбираем другую шашку
-                    _gameState.value = currentState.copy(selectedPiece = position)
+                    _gameState.value = currentState.copy(selectedPiece = move.from)
                 }
             }
         }

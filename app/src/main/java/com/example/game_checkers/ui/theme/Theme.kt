@@ -1,14 +1,13 @@
 package com.example.game_checkers.ui.theme
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.Shapes
-import androidx.compose.material3.Typography
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import com.example.game_checkers.CheckerStyle
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFBB86FC),
@@ -34,14 +33,23 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun Game_CheckersTheme(
-    darkTheme: Boolean = false, // Параметр для выбора темы
+    darkTheme: Boolean = false,
+    checkerStyle: CheckerStyle = CheckerStyle.CLASSIC,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography(),
-        content = content
+        typography = Typography,
+        content = {
+            CompositionLocalProvider(
+                LocalCheckerStyle provides checkerStyle,
+                content = content
+            )
+        }
     )
 }
+
+// Для доступа к стилю в любом месте приложения
+val LocalCheckerStyle = staticCompositionLocalOf { CheckerStyle.CLASSIC }
