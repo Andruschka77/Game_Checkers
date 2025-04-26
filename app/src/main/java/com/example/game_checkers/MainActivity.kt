@@ -10,6 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.game_checkers.ui.theme.Game_CheckersTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.game_checkers.ui.screen.CheckerStyle
+import com.example.game_checkers.ui.screen.CheckersScreen
+import com.example.game_checkers.ui.screen.SettingsScreen
+import com.example.game_checkers.ui.screen.WelcomeScreen
+import com.example.game_checkers.ui.screen.WinnerScreen
+import com.example.game_checkers.utils.Player
+import com.example.game_checkers.viewmodel.CheckersViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

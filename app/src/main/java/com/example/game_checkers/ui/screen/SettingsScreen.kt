@@ -1,4 +1,4 @@
-package com.example.game_checkers
+package com.example.game_checkers.ui.screen
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -31,6 +31,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.grid.items
+import com.example.game_checkers.R
 
 @Composable
 fun SettingsScreen(

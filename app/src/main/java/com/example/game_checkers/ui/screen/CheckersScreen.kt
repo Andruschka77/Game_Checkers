@@ -1,4 +1,4 @@
-package com.example.game_checkers
+package com.example.game_checkers.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +33,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.game_checkers.utils.CheckersGameState
+import com.example.game_checkers.viewmodel.CheckersViewModel
+import com.example.game_checkers.utils.Piece
+import com.example.game_checkers.utils.PieceType
+import com.example.game_checkers.utils.Player
+import com.example.game_checkers.utils.Position
 
 @Composable
 fun CheckersScreen(

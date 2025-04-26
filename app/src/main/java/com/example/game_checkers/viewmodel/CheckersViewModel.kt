@@ -1,7 +1,10 @@
-package com.example.game_checkers
+package com.example.game_checkers.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.game_checkers.utils.CheckersGameState
+import com.example.game_checkers.utils.Move
+import com.example.game_checkers.utils.Position
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

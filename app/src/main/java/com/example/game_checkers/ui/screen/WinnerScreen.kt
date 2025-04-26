@@ -1,4 +1,4 @@
-package com.example.game_checkers
+package com.example.game_checkers.ui.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Modifier
+import com.example.game_checkers.utils.Player
 
 @Composable
 fun WinnerScreen(

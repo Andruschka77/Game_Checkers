@@ -1,4 +1,4 @@
-package com.example.game_checkers
+package com.example.game_checkers.utils
 
 enum class PieceType { REGULAR, KING }
 enum class Player { WHITE, BLACK }

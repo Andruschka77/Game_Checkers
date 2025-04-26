@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.example.game_checkers.CheckerStyle
+import com.example.game_checkers.ui.screen.CheckerStyle
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFBB86FC),
