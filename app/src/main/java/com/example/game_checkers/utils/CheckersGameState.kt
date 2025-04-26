@@ -124,19 +124,7 @@ class CheckersGameState {
         selectedPiece = null
         possibleMoves = emptyList()
 
-        checkWinCondition()
-    }
-
-    private fun checkWinCondition() {
-        val whitePieces = board.flatten().count { it?.player == Player.WHITE }
-        val blackPieces = board.flatten().count { it?.player == Player.BLACK }
-
-        winner = when {
-            whitePieces == 0 -> Player.BLACK
-            blackPieces == 0 -> Player.WHITE
-            currentPlayerHasNoMoves() -> if (currentPlayer == Player.WHITE) Player.BLACK else Player.WHITE
-            else -> null
-        }
+        checkForWinner()
     }
 
     private fun currentPlayerHasNoMoves(): Boolean {
